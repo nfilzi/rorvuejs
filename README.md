@@ -12,7 +12,7 @@ The target is to build a simple feedback application using
 ### Rails new
 
 Let's start by creating a new Rails app calling Vue.js with Webpack
-```
+```bash
 # In the terminal
 rails new rorvuejs --webpack=vue --database=postgresql
 
@@ -24,7 +24,7 @@ git push origin master
 
 ### Creating the DB
 
-```
+```bash
 # In the terminal
 rails db:create
 rails db:migrate RAILS_ENV=development
@@ -33,20 +33,25 @@ rails db:migrate RAILS_ENV=development
 ### Home page: route and controller
 
 In order to call our front with Vue.js we will create a home page.
-Open your terminal and run
-```shell
-rails generate controller Home index
+Open your terminal and run:
 
+```bash
+rails generate controller Home index
+```
+
+```ruby
 # config/routes.rb replace GET home route by below one
 root to: 'home#index'
+```
 
+```erb
 # in app/views/home/index.html replace all by
 <div id='app'></div>
 ```
 
 ### Generating the feedback model
 
-```
+```bash
 rails g model Feedback title:string description:text
 rails db:migrate
 rails g controller feedbacks
@@ -63,6 +68,7 @@ namespace :api do
   end
 end
 ```
+
 build the next folder structure for controllers
 /controllers
     /api
@@ -124,14 +130,14 @@ puts "Feedbacks created"
 ```
 
 In the terminal
-```
+```bash
 rails db:seed
 ```
 
 ### Accessing the API
 
 Now lets visualize the api
-Start a server with rails s
+Start a server with `rails s`
 Go to http://localhost:3000/api/v1/feedbacks
 <img width="582" alt="Screenshot_api_output" src="https://user-images.githubusercontent.com/33062224/123652336-7fd8b000-d82c-11eb-8d62-8542ec4ab62c.png">
 
@@ -139,10 +145,11 @@ Go to http://localhost:3000/api/v1/feedbacks
 
 ### Adding static page with Vue.js
 
-```ruby
+```erb
 # app/view/application.html.erb add
 <%= javascript_pack_tag 'hello_vue' %>
 ```
+
 In the terminal open 2 windows and run below command
  - in one tab `rails server`
  - in another tab `./bin/webpack-dev-server`
@@ -160,7 +167,7 @@ In your below structure add a folder api and create a file client.js
      app.vue
 ```
 In this client.js file we will add the connexion with the API
-```ruby
+```javascript
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3000'
@@ -287,19 +294,22 @@ Now let's add some style
 
 ### Adding some tests 😇
 
-Go in your Gemfil
-```
+Go in your Gemfile
+
+```ruby
 group :development, :test do
   gem 'rspec-rails'
 end
 ```
+
 In the terminal
-```
+```bash
 bundle
 rails generate rspec:install
 ```
+
 Ready! Let's test the feedback model. In the terminal
-```shell
+```bash
 rails generate rspec:model feedback
 ```
 Go to your file spec/models/feedback_spec.rb
@@ -324,9 +334,9 @@ RSpec.describe Feedback, type: :model do
 end
 ```
 In the terminal run
-```shell
+```bash
 rspec spec/models/feedback_spec.rb
 ```
 
-Now lets test the API!!
+Now let's test the API!!
 To come later 😂
